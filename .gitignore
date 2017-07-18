@@ -1,0 +1,8 @@
+/opecv_build/*
+/opencv_contrib/*
+/opencv_source/*
+/x64/*
+/facial_recognition/x64/*
+/facial_recognition/facial_recognition.vcxproj
+/facial_recognition/facial_recognition.vcxproj.filters
+/.vs/*
