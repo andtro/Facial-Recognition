@@ -1,16 +1,38 @@
-#include "opencv2/core.hpp"
-#include "opencv2/face.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
+//#include "opencv2/face.hpp"
+//#include "opencv2/highgui.hpp"
+//#include "opencv2/imgproc.hpp"
+#include "opencv2/opencv.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 using namespace cv;
-using namespace cv::face;
+//using namespace cv::face;
 using namespace std;
 
-static Mat norm_0_255(InputArray _src) {
+int main() {
+	CascadeClassifier face_cascade = CascadeClassifier("C:/workspaces/Libraries/opencv320/install/etc/haarcascades/haarcascade_frontalface_default.xml");
+	VideoCapture cap = VideoCapture(0);
+	
+	Mat src, dst;
+	vector<Rect> faces;
+	do {
+		if (!cap.read(src)) {
+			return -1;
+		}
+		cvtColor(src, dst, COLOR_BGR2GRAY);
+		face_cascade.detectMultiScale(dst, faces, 1.3, 5);
+		if (faces.size() > 0) {
+			for (int i = 0; i < faces.size(); i++) {
+				rectangle(src, faces[i], Scalar(175, 0, 0), 3);
+			}
+		}
+		imshow("img", src);
+	} while (waitKey(30) != 27);
+}
+
+
+/*static Mat norm_0_255(InputArray _src) {
 	Mat src = _src.getMat();
 	// Create and return normalized image:
 	Mat dst;
@@ -174,4 +196,4 @@ int main(int argc, const char *argv[]) {
 		waitKey(0);
 	}
 	return 0;
-}
+}*/
